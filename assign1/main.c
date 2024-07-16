@@ -1,0 +1,1 @@
+/* https://kosenjp.sharepoint.com/:p:/r/sites/17toyama/gsmp/isp/_layouts/15/Doc.aspx */
