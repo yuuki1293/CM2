@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define VAR_COUNT 15
-#define TOPS 0, 3, 6, 8
-#define TOPS_COUNT 4
+#define VAR_COUNT 6
+#define TOPS 0, 3
+#define TOPS_COUNT 2
 
 int inc(int vars[VAR_COUNT], const int tops[TOPS_COUNT]);
 int verify(const int vars[VAR_COUNT]);
@@ -72,27 +72,48 @@ int inc(int vars[VAR_COUNT], const int tops[TOPS_COUNT])
  */
 int verify(const int vars[VAR_COUNT])
 {
-    int num1 = vars[0] * 100 + vars[1] * 10 + vars[2];
-    int num2 = vars[3] * 100 + vars[4] * 10 + vars[5];
-    int num3 = vars[6] * 100 + 50 + vars[7];
-    int num4 = vars[8] * 100 + vars[9] * 10 + vars[10];
-    int num5 = 500 + vars[11] * 10 + vars[12];
-    int num6 = 55500 + vars[13] * 10 + vars[14];
+    const int num1 = vars[0] * 100 + vars[1] * 10 + vars[2];
+    const int num2 = vars[3] * 100 + vars[4] * 10 + vars[5];
+    const int num3 = num1 * vars[5];
+    const int num4 = num1 * vars[4];
+    const int num5 = num1 * vars[3];
+    const int num6 = num1 * num2;
 
-    return num1 * vars[5] == num3    /**/
-           && num1 * vars[4] == num4 /**/
-           && num1 * vars[3] == num5 /**/
-           && num1 * num2 == num6;   /**/
+    if (num3 / 1000 || num4 / 1000 || num5 / 1000 || num6 / 55600)
+        return 0;
+
+    if (num3 / 100 == 5 || num3 / 100 == 0 || (num3 / 10) % 10 != 5 || num3 % 10 == 5)
+        return 0;
+
+    if (num4 / 100 == 5 || num4 / 100 == 0 || (num4 / 10) % 10 == 5 || num4 % 10 == 5)
+        return 0;
+
+    if (num5 / 100 != 5 || (num5 / 10) % 10 == 5 || num5 % 10 == 5)
+        return 0;
+
+    if (55500 >= num6 || (num6 / 10) % 10 == 5 || num6 % 10 == 5)
+        return 0;
+
+    return 1;
 }
 
 void print_vars(const int vars[VAR_COUNT])
 {
+    const int num1 = vars[0] * 100 + vars[1] * 10 + vars[2];
+    const int num2 = vars[3] * 100 + vars[4] * 10 + vars[5];
+    const int num3 = num1 * vars[5];
+    const int num4 = num1 * vars[4];
+    const int num5 = num1 * vars[3];
+    const int num6 = num1 * num2;
     char text[61];
     int i = 0;
-    i = sprintf(text, "    %d %d %d\n", vars[0], vars[1], vars[2]);
-    i += sprintf(text + i, "  × %d %d %d\n", vars[3], vars[4], vars[5]);
-    i += sprintf(text + i, "    %d 5 %d\n", vars[6], vars[7]);
-    i += sprintf(text + i, "  %d %d %d\n", vars[8], vars[9], vars[10]);
-    i += sprintf(text + i, "5 %d %d\n", vars[11], vars[12]);
-    i += sprintf(text + i, "5 5 5 %d %d\n\n", vars[13], vars[14]);
+
+    i = sprintf(text, "  %d\n", num1);
+    i += sprintf(text + i, "x %d\n", num2);
+    i += sprintf(text + i, "  %d\n", num3);
+    i += sprintf(text + i, " %d\n", num4);
+    i += sprintf(text + i, "%d\n", num5);
+    sprintf(text + i, "%d\n", num6);
+
+    puts(text);
 }
