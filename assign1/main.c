@@ -13,8 +13,14 @@ void print_vars(const int vars[VAR_COUNT]);
 
 int main()
 {
+    struct rusage r;
+    struct timeval start, end;
+    long res;
     const int tops[TOPS_COUNT] = {TOPS};
     int vars[VAR_COUNT] = {0};
+
+    getrusage(RUSAGE_SELF, &r);
+    start = r.ru_utime;
 
     for (size_t i = 0; i < TOPS_COUNT; i++)
         vars[tops[i]]++; /* 最上桁を1にする */
@@ -28,6 +34,11 @@ int main()
         }
 
     } while (!inc(vars, tops));
+
+    getrusage(RUSAGE_SELF, &r);
+    end = r.ru_utime;
+    res = ((end.tv_sec - start.tv_sec) * 1000000L) + end.tv_usec - start.tv_usec;
+    printf("%ldus\n", res);
 
     return 0;
 }
@@ -79,7 +90,7 @@ int verify(const int vars[VAR_COUNT])
     const int num5 = num1 * vars[3];
     const int num6 = num1 * num2;
 
-    if (num3 / 1000 || num4 / 1000 || num5 / 1000 || num6 / 55600)
+    if (num3 > 1000 || num4 > 1000 || num5 > 1000 || num6 > 55600)
         return 0;
 
     if (num3 / 100 == 5 || num3 / 100 == 0 || (num3 / 10) % 10 != 5 || num3 % 10 == 5)
