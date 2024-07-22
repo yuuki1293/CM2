@@ -1,4 +1,4 @@
-/* https://kosenjp.sharepoint.com/:p:/r/sites/17toyama/gsmp/isp/_layouts/15/Doc.aspx */
+/* https://kosenjp.sharepoint.com/sites/17toyama/gsmp/isp/Shared%20Documents/教員別授業資料/由井/2024%20I5%20CM2/コンピュータ計測Ⅱ%20課題１.pdf?wdsle=0&CT=1721571589369&OR=ItemsView&wdOrigin=TEAMSFILE.FILEBROWSER.DOCUMENTLIBRARY */
 
 #include <stdio.h>
 #include <stdlib.h>
